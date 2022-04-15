@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Details</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+  <form id="ptform" method="post" name="ptsubmit">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" value=""><br>
+    <label for="age">Age:</label><br>
+    <input type="text" id="age" name="age">
+    <p>Gender:</p>
+    <label for="male">Male: </label>
+    <input type="radio" name="gender" id="male" value="male">
+    <label for="female">Female: </label>
+    <input type="radio" name="gender" id="female" value="female"><br>
+    <input type="submit" value="Submit">
+  </form><br><br>
+
+
+  <table class="table table-striped" >
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% ptList.forEach(pt =>{ %>
+        <tr>
+          <th><%= pt.name %></th>
+          <th><%= pt.age %></th>
+          <th><%= pt.gender %></th>
+        </tr>
+      <% }) %>
+    </tbody>
+    
+  </table><br><br>
+
+  <a href="/">Go back</a>
+
+</body>
+</html>
