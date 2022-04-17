@@ -10,21 +10,24 @@ mongoose.connect(
 );
 
 const docSchema = {
+  docId:String,
   name: String,
   specialisation: String,
   gender: String,
 };
 
 const patSchema = {
+  patId:String,
   name: String,
   age: String,
   gender: String,
 };
 
 const appSchema = {
-  patient: String,
-  doctor: String,
-  specialisation: String,
+  patientId: String,
+  doctorId: String,
+  appointmentNo:String,
+  appointmentDate:Date
 };
 
 const doctor = mongoose.model("Doctor", docSchema);
@@ -36,6 +39,7 @@ const app = express();
 app.use(bodyparser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
+app.use(express.static(__dirname + '/public'));
 
 app.get("/", (req, res) => {
   res.render("index");
@@ -44,13 +48,18 @@ app.get("/", (req, res) => {
 
 
 app.post("/doctor", (req, res) => {
-  let newDoctor = new doctor({
-    name: req.body.name,
-    specialisation: req.body.specialisation,
-    gender: req.body.gender,
+  doctor.find({}, function(err, drs){
+    if(!err){
+      let newDoctor = new doctor({
+        docId:'DOC'+(drs.length+1).toString().padStart(3,'0'),
+        name: req.body.name,
+        specialisation: req.body.specialisation,
+        gender: req.body.gender,
+      });
+      newDoctor.save();
+      res.redirect("/doctor");
+    }
   });
-  newDoctor.save();
-  res.redirect("/doctor");
 });
 
 app.get("/doctor", (req, res) => {
@@ -71,13 +80,17 @@ app.get("/patient", (req, res) => {
 });
 
 app.post("/patient", (req, res) => {
-  let newPatient = new patient({
-    name: req.body.name,
-    age: req.body.age,
-    gender: req.body.gender,
+  patient.find({}, function(err, pts){
+    let newPatient = new patient({
+      patId:'PAT'+(pts.length+1).toString().padStart(4,'0'),
+      name: req.body.name,
+      age: req.body.age,
+      gender: req.body.gender,
+    });
+    newPatient.save();
+    res.redirect("/patient");
   });
-  newPatient.save();
-  res.redirect("/patient");
+  
 });
 
 app.get("/appointment", (req, res) => {
@@ -89,15 +102,37 @@ app.get("/appointment", (req, res) => {
 });
 
 app.post("/appointment", (req, res) => {
-  let newAppointment = new appointment({
-    patient: req.body.ptname,
-    doctor: req.body.drname,
-    specialisation: req.body.specialisation,
+  appointment.find({}, function(err, app){
+    patient.find({name:req.body.ptname},function(err,pt){
+      if(pt.length>0){
+        doctor.find({name:req.body.drname}, function(err, drs){
+          if(drs.length>0){
+            console.log(drs);
+            console.log(pt[0]);
+            let newAppointment = new appointment({
+              patientId: pt[0].patId,
+              doctorId: drs[0].docId,
+              appointmentNo: 'APP'+(app.length+1).toString().padStart(4,'0'),
+              appointmentDate:req.body.date
+            });
+            newAppointment.save();
+            res.redirect("/appointment");
+          }
+          else{
+            console.log('no doctor found');
+            res.redirect("/doctor");
+          }
+        })
+      }
+      else{
+        console.log('no patient found');
+        res.redirect('/patient')
+      }
+    })
   });
-  newAppointment.save();
-  res.redirect("/appointment");
 });
 
 app.listen(5000, () => {
   console.log(`Server is running on port ${5000}`);
 });
+

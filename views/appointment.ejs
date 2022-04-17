@@ -13,8 +13,8 @@
     <input type="text" id="ptname" name="ptname" value=""><br>
     <label for="drname">Doctor Name:</label><br>
     <input type="text" id="drname" name="drname"><br>
-    <label for="specialisation">Specialisation:</label><br>
-    <input type="text" id="specialisation" name="specialisation"><br><br>
+    <label for="date">Date of Appointment:</label><br>
+    <input type="date" id="date" name="date"><br><br>
     
     <input type="submit" value="Submit">
   </form><br><br>
@@ -23,18 +23,20 @@
   <table class="table table-striped" >
     <thead>
       <tr>
-        <th>Patient Name</th>
-        <th>Doctor Name</th>
-        <th>Specialisation</th>
+        <th>Appointment Number</th>
+        <th>Patient ID</th>
+        <th>Doctor ID</th>
+        <th>Appointment Date</th>
       </tr>
     </thead>
 
     <tbody>
       <% apList.forEach(ap =>{ %>
         <tr>
-          <th><%= ap.patient %></th>
-          <th><%= ap.doctor %></th>
-          <th><%= ap.specialisation %></th>
+          <th><%= ap.appointmentNo %></th>
+          <th><%= ap.patientId %></th>
+          <th><%= ap.doctorId %></th>
+          <th><%= String(ap.appointmentDate).substring(4, 15) %></th>
         </tr>
       <% }) %>
     </tbody>
