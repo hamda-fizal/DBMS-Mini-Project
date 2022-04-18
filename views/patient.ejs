@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,43 +8,83 @@
   <title>Patient Details</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
+
 <body>
-  <form id="ptform" method="post" name="ptsubmit">
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name" value=""><br>
-    <label for="age">Age:</label><br>
-    <input type="text" id="age" name="age">
-    <p>Gender:</p>
-    <label for="male">Male: </label>
-    <input type="radio" name="gender" id="male" value="male">
-    <label for="female">Female: </label>
-    <input type="radio" name="gender" id="female" value="female"><br>
-    <input type="submit" value="Submit">
-  </form><br><br>
+
+  <div class="container">
+
+    <form id="ptform" class="mt-5" method="post" name="ptsubmit">
+      <big>
+
+        <div class="form-group">
+
+          <label class="col-sm-2 control-label " for="name">Name:</label>
+          <div class="col-sm-10">
+
+            <input class="form-control" type="text" id="name" name="name" value=""><br>
+
+          </div>
+        </div>
 
 
-  <table class="table table-striped" >
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Gender</th>
-      </tr>
-    </thead>
+        <div class="form-group">
 
-    <tbody>
-      <% ptList.forEach(pt =>{ %>
+          <label class="col-sm-2 control-label " for="age">Age:</label>
+          <div class="col-sm-10">
+
+            <input type="text" class="form-control" id="age" name="age">
+          </div>
+        </div>
+
+
+
+        <i>Gender:</i>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+
+          <label class="" for="male"> Male </label>
+
+        </div>
+        <div class="form-check">
+          <input class="" type="radio" name="gender" id="female" value="female">
+          <label class="form-check-label" for="female"> Female </label>
+
+        </div>
+
+        <div class="col-sm-offset-2 col-sm-10">
+          <input type="submit" value="Submit">
+        </div>
+
+      </big>
+    </form>
+  </div><br><br>
+
+  <big>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% ptList.forEach(pt =>{ %>
         <tr>
           <th><%= pt.name %></th>
           <th><%= pt.age %></th>
           <th><%= pt.gender %></th>
         </tr>
-      <% }) %>
-    </tbody>
-    
-  </table><br><br>
+        <% }) %>
+      </tbody>
 
-  <a href="/">Go back</a>
+    </table><br><br>
+
+    <a class="col-lg-12" style="text-align:center" href="/">Go back</a>
+
+  </big>
 
 </body>
+
 </html>
